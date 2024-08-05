@@ -1,0 +1,9 @@
+venv/
+.pylintrc
+__pycahce__/
+
+#ide stuff
+.idea
+
+#django stuff
+db.sqlite3
