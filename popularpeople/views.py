@@ -66,13 +66,27 @@ sportsmen = [
     }
 ]
 
-
+cats_db = [
+    {"id": 1, "name": "Sportsmen"},
+    {"id": 2, "name": "Actors"},
+    {"id": 3, "name": "Scientists"},
+    {"id": 4, "name": "Musicians"},
+    {"id": 5, "name": "Authors"},
+    {"id": 6, "name": "Entrepreneurs"},
+    {"id": 7, "name": "Politicians"},
+    {"id": 8, "name": "Philanthropists"},
+    {"id": 9, "name": "Inventors"},
+    {"id": 10, "name": "Artists"},
+    {"id": 11, "name": "Explorers"}
+]
 
 def index(request):
     data = {'title': "Main Page",
             'menu': menu,
-            'posts': sportsmen
+            'posts': sportsmen,
+            'cats_selected': 0
             }
+
     return render(request, 'popularpeople/index.html', context=data)
 
 def show_post(request, post_id):
@@ -96,3 +110,15 @@ def login(request):
 def about(request):
     data = {'menu': menu}
     return render(request, 'popularpeople/about.html', data)
+
+
+
+def show_category(request, cat_id):
+    data = {
+        'title': 'Articles by categories',
+        'menu': menu,
+        'posts': sportsmen,
+        'cat_selected': cat_id,
+    }
+    return render(request, 'popularpeople/index.html', context=data)
+
