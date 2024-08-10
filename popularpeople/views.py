@@ -1,8 +1,9 @@
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, Http404
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
 from django.template.loader import render_to_string
 
+from popularpeople.models import People
 
 menu = [
     {"name": "About Us", "url": "about"},
@@ -81,16 +82,24 @@ cats_db = [
 ]
 
 def index(request):
-    data = {'title': "Main Page",
-            'menu': menu,
-            'posts': sportsmen,
-            'cats_selected': 0
-            }
-
+    posts = People.published.all()
+    data = {
+        'title': "Main Page",
+        'menu': menu,
+        'posts': posts,
+        'cats_selected': 0
+    }
     return render(request, 'popularpeople/index.html', context=data)
 
-def show_post(request, post_id):
-    return HttpResponse(f"Article with id = {post_id}")
+def show_post(request, post_slug):
+    post = get_object_or_404(People, slug=post_slug)
+    data = {'title': post.title,
+            'menu': menu,
+            'post': post,
+            'cat_selected': 1,
+            }
+
+    return render(request, 'popularpeople/post.html', data)
 
 
 def page_not_found(request, exception):

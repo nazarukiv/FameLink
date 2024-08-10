@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'popularpeople.apps.PopularpeopleConfig'
+    'popularpeople.apps.PopularpeopleConfig',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [
