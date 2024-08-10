@@ -4,6 +4,10 @@
 <ul class="list-articles">
 	{% for p in posts %}
 	{% if p.is_published %}
+        <li><div class="article-panel">
+            <p class="first">Category: {{ p.cat }}</p>
+            <p class="last"> Date: {{ p.time_created|date:"d-m-Y H:i" }}</p>
+        </div> </li>
 			<li><h2>{{p.title}}</h2>
     {% autoescape off %}
 	{{p.content|linebreaks|truncatewords:40}}
