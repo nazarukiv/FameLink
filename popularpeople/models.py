@@ -16,12 +16,28 @@ class People(models.Model):
     content = models.TextField(blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
-    is_published = models.BooleanField(choices=Status.choices, default=Status.PUBLISHED)
+    is_published = models.BooleanField(choices=tuple(map(lambda x: (bool(x[0]), x[1]), Status.choices)),
+                                       default=Status.DRAFT, verbose_name="Status")
     cat = models.ForeignKey('Category', on_delete=models.PROTECT)
     tags = models.ManyToManyField('TagPost', blank=True, related_name='tags')
+    partner = models.OneToOneField("Partner", on_delete=models.SET_NULL, null=True, blank=True, related_name='par')
 
     objects = models.Manager()
     published = PublishedManager()
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Popular People'
+        verbose_name_plural = 'Popular People'
+        ordering = ['-time_created']
+        indexes = [
+            models.Index(fields=['time_created'])
+        ]
+
+    def get_absolute_url(self):
+        return reverse('post', kwargs={'post_slug': self.slug})
 
     def __str__(self):
         return self.title
@@ -45,6 +61,10 @@ class Category(models.Model):
     def get_absolute_url(self):
         return reverse('category', kwargs={'cat_slug': self.slug})
 
+    class Meta:
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
+
 
 class TagPost(models.Model):
     tag = models.CharField(max_length=100, db_index=True)
@@ -55,4 +75,13 @@ class TagPost(models.Model):
 
     def get_absolute_url(self):
         return reverse('tag', kwargs={'tag_slug': self.slug})
+
+
+class Partner(models.Model):
+    name = models.CharField(max_length=100)
+    age = models.IntegerField(null=True)
+    m_count = models.IntegerField(blank=True, default=0)
+
+    def __str__(self):
+        return self.name
 

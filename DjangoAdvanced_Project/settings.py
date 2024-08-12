@@ -25,6 +25,8 @@ SECRET_KEY = 'django-insecure-96$(^vhq=4!x5ei!7j2zcbjo#a-wu%tjy8qjhgg-44_ap!68sm
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+INTERNAL_IPS = ["127.0.0.1",]
+
 ALLOWED_HOSTS = ['127.0.0.1']
 
 
@@ -38,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'popularpeople.apps.PopularpeopleConfig',
-    'django_extensions'
+    'django_extensions',
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
@@ -49,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'DjangoAdvanced_Project.urls'
