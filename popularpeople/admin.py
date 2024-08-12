@@ -3,6 +3,25 @@ from django.contrib import admin, messages
 from popularpeople.models import People, Category, Partner
 
 
+class MarriedFilter(admin.SimpleListFilter):
+    title = "Status"
+    parameter_name = "status"
+
+    def lookups(self, request, model_admin):
+        return [
+            ('married', 'Married'),
+            ('single', "Single")
+        ]
+
+    def queryset(self, request, queryset):
+        if self.value == 'married':
+            return queryset.filter(partner__isnull=False)
+        elif self.value == 'single':
+            return queryset.filter(partner__isnull=True)
+
+    def queryset(self, request, queryset):
+        return queryset
+
 @admin.register(People)
 class PeopleAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'time_created', 'is_published', 'cat', 'brief_info')
@@ -11,6 +30,8 @@ class PeopleAdmin(admin.ModelAdmin):
     list_editable = ('is_published', )
     list_per_page = 10
     actions = ['set_published', 'set_draft']
+    search_fields = ['title', 'cat__name']
+    list_filter = ['cat__name', 'is_published']
 
     @admin.display(description='Description')
     def brief_info(self, people: People):
