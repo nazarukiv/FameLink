@@ -24,6 +24,10 @@ class MarriedFilter(admin.SimpleListFilter):
 
 @admin.register(People)
 class PeopleAdmin(admin.ModelAdmin):
+    fields = ['title', 'content', 'slug', 'cat', 'partner', 'tags']
+    #exclude = ['tags', 'is_published']
+    readonly_fields = ['slug']
+    filter_horizontal = ['tags']
     list_display = ('id', 'title', 'time_created', 'is_published', 'cat', 'brief_info')
     list_display_links = ('title','id')
     ordering = ['-time_created', 'title']
