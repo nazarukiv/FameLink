@@ -1,7 +1,13 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
-    <h1>Abouts Us</h1>
-    <p></p>
+    <h1>{{ title }}</h1>
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p><button type="submit">Send</button></p>
+    </form>
 {% endblock %}

@@ -1,7 +1,11 @@
 from django.contrib import admin
 from django.urls import path, register_converter
+
+
 from popularpeople import views
 from popularpeople.converters import FourDigitYearConverter
+from django.conf import settings
+from django.conf.urls.static import static
 
 register_converter(FourDigitYearConverter, "year4")
 
@@ -15,6 +19,9 @@ urlpatterns = [
     path('category/<slug:cat_slug>/', views.show_category, name='category'),
     path('tag/<slug:tag_slug>/', views.show_tag_postlist, name='tag')
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Custom 404 error handler
 handler404 = 'popularpeople.views.page_not_found'

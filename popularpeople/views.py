@@ -1,10 +1,12 @@
+import os
+
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, Http404
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
 from django.template.loader import render_to_string
 
-from popularpeople.forms import AddPostForm
-from popularpeople.models import People, Category, TagPost
+from popularpeople.forms import AddPostForm, UploadFileForm
+from popularpeople.models import People, Category, TagPost, UploadFiles
 
 menu = [
     {"name": "About Us", "url": "about"},
@@ -41,15 +43,12 @@ def page_not_found(request, exception):
 
 def addpage(request):
     if request.method == "POST":
-        form = AddPostForm(request.POST)
+        form = AddPostForm(request.POST, request.FILES)
         if form.is_valid():
-            try:
-                People.objects.create(**form.cleaned_data)
-                return redirect('home')
-            except:
-                form.add_error(None, 'error when adding article')
+            form.save()
+            return redirect('home')
     else:
-        form = AddPostForm
+        form = AddPostForm()
 
     data = {"menu": menu, "title": "Add Article", 'form': form}
     return render(request, 'popularpeople/addpage.html', data)
@@ -60,11 +59,28 @@ def contact(request):
 def login(request):
     return HttpResponse("Login")
 
+# def handle_uploaded_file(f):
+#     upload_dir = "popularpeople/uploads"
+#     os.makedirs(upload_dir, exist_ok=True)
+#     file_path = os.path.join(upload_dir, f.name)
+#     with open(file_path, "wb+") as destination:
+#         for chunk in f.chunks():
+#             destination.write(chunk)
 
 def about(request):
-    data = {'menu': menu}
-    return render(request, 'popularpeople/about.html', data)
+    if request.method == "POST":
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            uploaded_file = form.cleaned_data['file']
+            UploadFiles.objects.create(file=uploaded_file)
+            message = "File uploaded successfully!"
+        else:
+            message = "There was an error with the file upload."
+    else:
+        form = UploadFileForm()
 
+    data = {'menu': menu, 'title': 'About Us', 'form': form}
+    return render(request, 'popularpeople/about.html', data)
 
 
 def show_category(request, cat_slug):

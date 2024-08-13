@@ -1,4 +1,5 @@
 from django.contrib import admin, messages
+from django.utils.safestring import mark_safe
 
 from popularpeople.models import People, Category, Partner
 
@@ -24,11 +25,11 @@ class MarriedFilter(admin.SimpleListFilter):
 
 @admin.register(People)
 class PeopleAdmin(admin.ModelAdmin):
-    fields = ['title', 'content', 'slug', 'cat', 'partner', 'tags']
+    fields = ['title', 'content', 'slug', 'cat', 'partner', 'tags', 'photo', 'post_photo']
     #exclude = ['tags', 'is_published']
-    readonly_fields = ['slug']
+    readonly_fields = ['slug', 'post_photo']
     filter_horizontal = ['tags']
-    list_display = ('id', 'title', 'time_created', 'is_published', 'cat', 'brief_info')
+    list_display = ('id', 'title', 'time_created', 'is_published', 'cat', 'post_photo')
     list_display_links = ('title','id')
     ordering = ['-time_created', 'title']
     list_editable = ('is_published', )
@@ -40,6 +41,13 @@ class PeopleAdmin(admin.ModelAdmin):
     @admin.display(description='Description')
     def brief_info(self, people: People):
         return f"Description {len(people.content)} symbols."
+
+    @admin.display(description='Description')
+    def post_photo(self, people: People):
+        if people.photo:
+            return mark_safe(f"<img src='{people.photo.url}' width=50")
+        else:
+            return 'no photo'
 
     @admin.action(description="Publish chosen articles")
     def set_published(self, request, queryset):
