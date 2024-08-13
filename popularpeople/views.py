@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
 from django.template.loader import render_to_string
 
+from popularpeople.forms import AddPostForm
 from popularpeople.models import People, Category, TagPost
 
 menu = [
@@ -39,7 +40,19 @@ def page_not_found(request, exception):
 
 
 def addpage(request):
-    return HttpResponse("Add article")
+    if request.method == "POST":
+        form = AddPostForm(request.POST)
+        if form.is_valid():
+            try:
+                People.objects.create(**form.cleaned_data)
+                return redirect('home')
+            except:
+                form.add_error(None, 'error when adding article')
+    else:
+        form = AddPostForm
+
+    data = {"menu": menu, "title": "Add Article", 'form': form}
+    return render(request, 'popularpeople/addpage.html', data)
 
 def contact(request):
     return HttpResponse("Contact Us")
