@@ -9,6 +9,7 @@ from django.views.generic import TemplateView, ListView, DetailView, FormView
 
 from popularpeople.forms import AddPostForm, UploadFileForm
 from popularpeople.models import People, Category, TagPost, UploadFiles
+from popularpeople.utils import DataMixin
 
 menu = [
     {"name": "About Us", "url": "about"},
@@ -18,21 +19,12 @@ menu = [
 ]
 
 
-# def index(request):
-#     posts = People.published.all()
-#     data = {
-#         'title': "Main Page",
-#         'menu': menu,
-#         'posts': posts,
-#         'cats_selected': 0
-#     }
-#     return render(request, 'popularpeople/index.html', context=data)
-
-
-class WomenHome(ListView):
+class PeopleHome(ListView):
     template_name = 'popularpeople/index.html'
-    model = People
+    #model = People
     context_object_name = 'posts'
+    title_page = "Main Page"
+    cat_selected = 0
     extra_context = {
         'title': "Main Page",
         'menu': menu,
@@ -42,27 +34,9 @@ class WomenHome(ListView):
     def get_queryset(self):
         return People.published.all().select_related('cat')
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['title'] = 'Main Page'
-    #     context['menu'] = menu
-    #     context['posts'] = People.published.all()
-    #     context['cat_selected'] = int(self.request.GET.get('cat_id', 0))
-    #     return context
 
 
-# def show_post(request, post_slug):
-#     post = get_object_or_404(People, slug=post_slug)
-#     data = {'title': post.title,
-#             'menu': menu,
-#             'post': post,
-#             'cat_selected': 1,
-#             }
-#
-#     return render(request, 'popularpeople/post.html', data)
-
-
-class ShowPost(DetailView):
+class ShowPost(DataMixin ,DetailView):
     model = People
     template_name = 'popularpeople/post.html'
     slug_url_kwarg = 'post_slug'
@@ -70,9 +44,7 @@ class ShowPost(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = context['post'].title
-        context['menu'] = menu
-        return context
+        return self.get_mixin_context(context, title=context['post'].title)
 
     def get_object(self, queryset=None):
         return get_object_or_404(People.published, slug=self.kwargs[self.slug_url_kwarg])
@@ -81,34 +53,6 @@ class ShowPost(DetailView):
 
 def page_not_found(request, exception):
     return HttpResponseNotFound("<h1>Page Not Found</h1>")
-
-
-# def addpage(request):
-#     if request.method == "POST":
-#         form = AddPostForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('home')
-#     else:
-#         form = AddPostForm()
-#
-#     data = {"menu": menu, "title": "Add Article", 'form': form}
-#     return render(request, 'popularpeople/addpage.html', data)
-
-
-# class AddPage(View):
-#     def get(self, request):
-#         form = AddPostForm()
-#         data = {"menu": menu, "title": "Add Article", 'form': form}
-#         return render(request, 'popularpeople/addpage.html', data)
-#
-#     def post(self, request):
-#         form = AddPostForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('home')
-#         data = {"menu": menu, "title": "Add Article", 'form': form}
-#         return render(request, 'popularpeople/addpage.html', data)
 
 class AddPage(FormView):
     template_name = 'popularpeople/addpage.html'

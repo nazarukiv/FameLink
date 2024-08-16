@@ -10,7 +10,7 @@ from django.conf.urls.static import static
 register_converter(FourDigitYearConverter, "year4")
 
 urlpatterns = [
-    path('', views.WomenHome.as_view(), name='home'),
+    path('', views.PeopleHome.as_view(), name='home'),
     path('about/', views.about, name='about'),
     path('addpage/', views.AddPage.as_view(), name='add_page'),
     path('contact/', views.contact, name='contact'),
