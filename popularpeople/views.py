@@ -25,6 +25,7 @@ class PeopleHome(ListView):
     context_object_name = 'posts'
     title_page = "Main Page"
     cat_selected = 0
+    paginate_by = 3
     extra_context = {
         'title': "Main Page",
         'menu': menu,
@@ -53,6 +54,7 @@ class ShowPost(DataMixin ,DetailView):
 
 def page_not_found(request, exception):
     return HttpResponseNotFound("<h1>Page Not Found</h1>")
+
 
 class AddPage(FormView):
     template_name = 'popularpeople/addpage.html'
@@ -99,23 +101,24 @@ def about(request):
     return render(request, 'popularpeople/about.html', data)
 
 
-def show_category(request, cat_slug):
-    category = get_object_or_404(Category, slug=cat_slug)
-    posts = People.published.filter(cat_id=category.pk)
-
-    data = {
-        'title': f'Category: {category.name}',
-        'menu': menu,
-        'posts': posts,
-        'cat_selected': category.pk,
-    }
-    return render(request, 'popularpeople/index.html', context=data)
+# def show_category(request, cat_slug):
+#     category = get_object_or_404(Category, slug=cat_slug)
+#     posts = People.published.filter(cat_id=category.pk)
+#
+#     data = {
+#         'title': f'Category: {category.name}',
+#         'menu': menu,
+#         'posts': posts,
+#         'cat_selected': category.pk,
+#     }
+#     return render(request, 'popularpeople/index.html', context=data)
 
 
 class PeopleCategory(ListView):
     template_name = 'popularpeople/index.html'
     context_object_name = 'posts'
     allow_empty = False
+    paginate_by = 3
 
     def get_queryset(self):
         return People.published.filter(cat__slug=self.kwargs['cat_slug']).select_related('cat')
