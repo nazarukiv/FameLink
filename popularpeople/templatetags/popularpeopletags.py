@@ -1,6 +1,7 @@
 from django import template
 import popularpeople.views as views
 from popularpeople.models import Category, TagPost
+from popularpeople.utils import menu
 
 register = template.Library()
 
@@ -14,3 +15,7 @@ def show_categories(cat_selected=0):
 def show_all_tags():
     return {'tags': TagPost.objects.all()}
 
+
+@register.simple_tag
+def get_menu():
+    return menu

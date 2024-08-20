@@ -1,9 +1,9 @@
 menu = [
-    {"name": "About Us", "url": "about"},
-    {"name": "Add Article", "url": "add_page"},
-    {"name": "Contact Us", "url": "contact"},
-    {"name": "Log In", "url": "login"}
+    {"name": "About Us", "url_name": "about"},
+    {"name": "Add Article", "url_name": "add_page"},
+    {"name": "Contact Us", "url_name": "contact"},
 ]
+
 class DataMixin:
     title_page = None
     cat_selected = None

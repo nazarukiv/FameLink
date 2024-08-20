@@ -1,5 +1,6 @@
 {% load static %}
 {% load popularpeopletags %}
+{% get_menu as mainmenu %}
 
 <!DOCTYPE html>
 <html>
@@ -17,10 +18,14 @@
         <div class="header">
             <ul id="mainmenu" class="mainmenu">
             <li class="logo"><a href="{% url 'home' %}"><div class="logo"></div></a></li>
-{% for m in menu %}
-    {% if not forloop.last %}<li>{% else %}<li class="last">{% endif %}
-        <a href="{% url m.url %}">{{ m.name }}</a></li>
+{% for m in mainmenu %}
+    <li><a href="{% url m.url_name %}">{{ m.name }}</a></li>
 {% endfor %}
+{% if user.is_authenticated %}
+    <li class="last">{{ user.username }} | <a href="{% url 'users:logout' %}">Login</a></li>
+{% else %}
+    <li class="last"><a href="{% url 'users:login' %}">Login</a> | <a href="#">Register</a></li>
+{% endif %}
             </ul>
             <div class="clear"></div>
         </div>
@@ -32,20 +37,18 @@
     <td valign="top" class="left-chapters">
     <ul id="leftchapters">
         {% if cat_selected == 0 %}
-		<li class="selected">All Categories</li>
-		{% else %}
-		<li><a href="{% url 'home' %}">All Categories</a></li>
-		{% endif %}
+        <li class="selected">All Categories</li>
+        {% else %}
+        <li><a href="{% url 'home' %}">All Categories</a></li>
+        {% endif %}
 
-		{% show_categories cat_selected %}
+        {% show_categories cat_selected %}
         <li class="share">
         <p>My Channel</p>
         <a class="share-yt" href="#" target="_blank" rel="nofollow"></a>
         </li>
 
-
         <li>{% show_all_tags %}</li>
-
 
     </ul>
 </td>
@@ -63,7 +66,6 @@
 <!-- End Content Block -->
 {% block navigation %}
 {% endblock %}
-
 
 </td></tr></table>
 </td></tr>

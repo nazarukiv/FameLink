@@ -1,5 +1,7 @@
 import os
 
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, Http404
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse, reverse_lazy
@@ -56,13 +58,14 @@ def page_not_found(request, exception):
     return HttpResponseNotFound("<h1>Page Not Found</h1>")
 
 
-class AddPage(FormView):
+class AddPage(LoginRequiredMixin, FormView):
     template_name = 'popularpeople/addpage.html'
     form_class = AddPostForm
     success_url = reverse_lazy('home')
 
     def form_valid(self, form):
-        form.save()
+        w = form.save(commit=False)
+        w.author = self.request.user
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -85,6 +88,7 @@ def login(request):
 #         for chunk in f.chunks():
 #             destination.write(chunk)
 
+@login_required(login_url='/admin/')
 def about(request):
     if request.method == "POST":
         form = UploadFileForm(request.POST, request.FILES)
