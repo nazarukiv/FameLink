@@ -1,11 +1,55 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-    <h1>{{ title }}</h1>
-    {% if message %}
-        <p>{{ message }}</p>
-    {% endif %}
- {% for itme in page_object %}
-     <p>{{ itme }}</p>
- {% endfor %}
+<div class="about-us-container">
+    <section class="about-hero">
+        <h1>{{ title }}</h1>
+        <p class="tagline">Connecting you with the most popular people around the world.</p>
+    </section>
+
+    <section class="about-mission">
+        <h2>Our Mission</h2>
+        <p>At FameLink, our mission is to provide a seamless and user-friendly experience for all our users. We empower individuals with the tools and resources they need to connect, learn, and grow in a supportive environment.</p>
+    </section>
+
+    <section class="about-values">
+        <h2>Our Values</h2>
+        <div class="values-grid">
+            <div class="value-item">
+                <i class="fas fa-handshake"></i>
+                <h3>Integrity</h3>
+                <p>We believe in being honest and transparent in all our operations.</p>
+            </div>
+            <div class="value-item">
+                <i class="fas fa-users"></i>
+                <h3>Community</h3>
+                <p>We work to create a friendly environment where everyone can succeed.</p>
+            </div>
+            <div class="value-item">
+                <i class="fas fa-lightbulb"></i>
+                <h3>Innovation</h3>
+                <p>We are committed to continuously improving our platform and services.</p>
+            </div>
+            <div class="value-item">
+                <i class="fas fa-headset"></i>
+                <h3>Support</h3>
+                <p>Our team is dedicated to providing exceptional support to all users.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-team">
+        <h2>Meet Our Team</h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <div class="team-photo">
+                    <img src="{% static 'popularpeople/images/team_member1.png' %}" alt="Ivan Nazaruk">
+                </div>
+                <h3>Ivan Nazaruk</h3>
+                <p>Developer</p>
+            </div>
+        </div>
+    </section>
+</div>
 {% endblock %}

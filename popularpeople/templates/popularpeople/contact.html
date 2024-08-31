@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="contact-us-container">
+    <section class="contact-hero">
+        <h1>{{ title }}</h1>
+        <p>If you have any questions, feedback, or need assistance, please feel free to reach out to us.</p>
+    </section>
+
+    <section class="contact-info">
+        <h2>Contact Information</h2>
+        <ul class="contact-list">
+            <li><strong>Name:</strong> Ivan Nazaruk</li>
+            <li><strong>Email:</strong> <a href="mailto:nazaruk7649@ukr.net">nazaruk7649@ukr.net</a></li>
+            <li><strong>Phone:</strong> +44 1234 567890</li>
+        </ul>
+    </section>
+
+    <section class="follow-us">
+        <h2>Follow Us</h2>
+        <p>Stay updated by following us on our social media channels:</p>
+        <ul class="social-links">
+            <li><a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i> Facebook</a></li>
+            <li><a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i> Twitter</a></li>
+            <li><a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i> Instagram</a></li>
+        </ul>
+    </section>
+</div>
+{% endblock %}

@@ -1,7 +1,9 @@
 import os
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.mail import send_mail
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, Http404
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse, reverse_lazy
@@ -74,8 +76,30 @@ class AddPage(LoginRequiredMixin, FormView):
         context['title'] = "Add Article"
         return context
 
-def contact(request):
-    return HttpResponse("Contact Us")
+class ContactView(View):
+    template_name = 'popularpeople/contact.html'
+
+    def get(self, request):
+        return render(request, self.template_name, {'title': 'Contact Us'})
+
+    def post(self, request):
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+
+        try:
+            send_mail(
+                subject=f'Contact Form Submission from {name}',
+                message=message,
+                from_email=email,
+                recipient_list=['nazaruk7649@ukr.net'],
+            )
+            messages.success(request, 'Your message has been sent successfully!')
+        except Exception as e:
+            messages.error(request, 'There was an error sending your message. Please try again later.')
+            print(e)
+
+        return HttpResponseRedirect(reverse('users:contact'))
 
 def login(request):
     return HttpResponse("Login")

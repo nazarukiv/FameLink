@@ -1,7 +1,7 @@
 from django.contrib import admin, messages
 from django.utils.safestring import mark_safe
 
-from popularpeople.models import People, Category, Partner
+from popularpeople.models import People, Category, Partner, TagPost
 
 
 class MarriedFilter(admin.SimpleListFilter):
@@ -71,5 +71,14 @@ class CategoryAdmin(admin.ModelAdmin):
 class PartnerAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
     list_display_links = ('name','id')
+
+
+@admin.register(TagPost)
+class TagAdmin(admin.ModelAdmin):
+    list_display = ('id', 'tag')
+    list_display_links = ('id', 'tag')
+    prepopulated_fields = {"slug": ("tag",)}
+
+
 
 
