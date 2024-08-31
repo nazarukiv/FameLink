@@ -9,49 +9,6 @@ FameLink is a Django-based web application that connects users with popular peop
 - **Dynamic Pages**: About Us, Contact Us
 - **Dockerized Setup**: Easy deployment using Docker
 
-## Project Structure
-
-```bash
-├── DjangoAdvanced_Project/
-│   ├── DjangoAdvanced_Project/    # Main project directory
-│   │   ├── __init__.py            # Project initialization
-│   │   ├── asgi.py                # ASGI configuration
-│   │   ├── settings.py            # Project settings
-│   │   ├── urls.py                # URL configuration
-│   │   ├── wsgi.py                # WSGI configuration
-│   ├── popularpeople/             # Main application directory
-│   │   ├── migrations/            # Database migrations
-│   │   ├── static/                # Static files (CSS, JS, Images)
-│   │   │   ├── css/               # Stylesheets
-│   │   │   └── images/            # Image files
-│   │   ├── templates/             # HTML templates
-│   │   │   ├── base.html          # Base template
-│   │   │   ├── about.html         # About Us page template
-│   │   │   ├── contact.html       # Contact Us page template
-│   │   │   ├── index.html         # Homepage template
-│   │   │   └── post.html          # Article template
-│   │   ├── admin.py               # Admin configuration
-│   │   ├── apps.py                # Application configuration
-│   │   ├── forms.py               # Forms for handling user input
-│   │   ├── models.py              # Database models
-│   │   ├── urls.py                # URL routing
-│   │   ├── views.py               # Application views (logic)
-│   │   ├── tests.py               # Unit tests
-│   │   ├── templatetags/          # Custom template tags
-│   ├── users/                     # User management application
-│   │   ├── templates/             # User-related templates
-│   │   │   ├── login.html         # Login page template
-│   │   │   ├── register.html      # Registration page template
-│   │   │   ├── profile.html       # User profile page template
-│   │   │   ├── password_reset.html # Password reset page template
-│   │   ├── forms.py               # User forms
-│   │   ├── views.py               # User views
-│   │   ├── urls.py                # User URL configuration
-│   ├── manage.py                  # Django management script
-│   ├── Dockerfile                 # Docker configuration
-│   ├── requirements.txt           # Python dependencies
-│   ├── README.md                  # Project documentation
-```
 
 ## Installation
 
