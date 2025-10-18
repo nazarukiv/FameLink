@@ -1,15 +1,5 @@
 # FameLink
 
-FameLink is a Django-based web application that connects users with popular people around the world. The platform provides various features, including user authentication, article management, and dynamic contact and about us pages.
-
-## Features
-
-- **User Authentication**: Login, Logout, Registration, Password Reset
-- **Article Management**: Add, Edit, Delete, View articles
-- **Dynamic Pages**: About Us, Contact Us
-- **Dockerized Setup**: Easy deployment using Docker
-
-
 ## Installation
 
 ### Prerequisites
