@@ -77,6 +77,4 @@ Feel free to fork the project, create a branch, and submit a pull request with a
 
 For any inquiries or questions, feel free to contact us at [nazaruk7649@ukr.net](mailto:nazaruk7649@ukr.net).
 
----
 
-Thank you for using FameLink! We hope you find it useful and enjoyable.
