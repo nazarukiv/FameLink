@@ -65,6 +65,6 @@ Feel free to fork the project, create a branch, and submit a pull request with a
 
 ## Contact
 
-For any inquiries or questions, feel free to contact us at [nazaruk7649@ukr.net](mailto:nazaruk7649@ukr.net).
+For any inquiries or questions, feel free to contact me at [nazaruk7649@ukr.net](mailto:nazaruk7649@ukr.net).
 
 
